@@ -17,8 +17,8 @@
 <div class="wrap center">
 
   <img src="icon.png" alt="">
-  <h1>You're confirmed</h1>
-  <p class="lead">Your email address is verified. Open Niblr and log in with it —
+  <h1 id="title">You're confirmed</h1>
+  <p class="lead" id="lead">Your email address is verified. Open Niblr and log in with it —
   you're all set.</p>
 
   <div class="note" style="text-align:left">
@@ -37,5 +37,19 @@
   <footer>Niblr · <a href="mailto:rvdesign12089@gmail.com">rvdesign12089@gmail.com</a></footer>
 
 </div>
+<script>
+  // Supabase appends #error=... when the link was expired or already used.
+  // Usually the account is confirmed already (an earlier tap worked), so
+  // point people at logging in rather than claiming a fresh confirmation.
+  (function () {
+    var h = new URLSearchParams(location.hash.slice(1));
+    if (!h.get('error')) return;
+    document.getElementById('title').textContent = 'This link has expired';
+    document.getElementById('lead').textContent =
+      'Confirmation links only work once and expire after a day. If you already ' +
+      'tapped it, your email is confirmed — just open Niblr and log in. Otherwise, ' +
+      'try signing up again in the app to get a new link.';
+  })();
+</script>
 </body>
 </html>
